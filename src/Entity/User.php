@@ -42,7 +42,7 @@ class User
     }
 
     /**
-     * @Assert\IsTrue(message="The password should not contain your email")
+     * @Assert\IsTrue(message="The password should not contain your e")
      */
     public function isValidPassword()
     {
