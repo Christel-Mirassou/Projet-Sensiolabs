@@ -3,7 +3,7 @@ twig:
 
     form_themes:         
         - bootstrap_4_horizontal_layout.html.twig
-        # - 'my_form_theme.html.twig'   permet de faire des thèmes de formulaires custom le twig est à la racine du folder template
+        - 'my_form_theme.html.twig'   #permet de faire des thèmes de formulaires custom le twig est à la racine du folder template
 
 when@test:
     twig:

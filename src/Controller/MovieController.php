@@ -22,7 +22,9 @@ class MovieController extends AbstractController
         
     }
 
-    #[Route('/movie', name: 'movie')]
+    /**
+     * @Route("/movie", name="movie")
+     */
     public function index(): Response
     {
         return $this->render('movie/index.html.twig', [
@@ -30,7 +32,9 @@ class MovieController extends AbstractController
         ]);
     }
 
-    #[Route('/movie/latest', name: 'movie_latest')]
+    /**
+     * @Route("/movie/latest", name="movie_latest")
+     */
     public function latest(MovieRepository $movieRepository): Response
     {
         $movies = $movieRepository->findBy([],['id' => 'DESC']);
@@ -40,7 +44,9 @@ class MovieController extends AbstractController
         ]);
     }
 
-    #[Route('/movie/search', name: 'movie_search')]
+    /**
+     * @Route("/movie/search", name="movie_search")
+     */
     public function search(Request $request): Response
     {
         $keyword = $request->query->get('keyword', 'Sun');
@@ -53,7 +59,9 @@ class MovieController extends AbstractController
         ]);
     }
 
-    #[Route('/movie/{id}', name: 'movie_show', requirements: ['id' => "\d+"])]
+    /**
+     * @Route("/movie/{id}", name="movie_show", requirements={"id": "\d+"})
+     */
     public function show(int $id, MovieRepository $movieRepository): Response
     {
         $movie = $movieRepository->findOneById($id);
@@ -64,7 +72,9 @@ class MovieController extends AbstractController
         ]);
     }
     
-    #[Route('/movie/{imdbId}/import', name: 'movie_import')]
+    /**
+     * @Route("/movie/{imdbId}/import", name="movie_import")
+     */
     public function import($imdbId, EntityManagerInterface $manager): Response
     {
         $movieData = $this->omdbApi->requestOneById($imdbId);

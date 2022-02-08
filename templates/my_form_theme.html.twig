@@ -1,11 +1,9 @@
-{# {% block email_widget %}
-
-   {{ dump() }}
-   <input type="email" placeholder="christel@postlab.fr" >
+{# form|text|email|checkbox #}
+{% block email_widget %}
+    {# {{ dump() }} #}
+    @<input type="email" placeholder="steve@apple.fr" class="form-control" name="{{ full_name }}" />@
 {% endblock %}
 
-
 {% block _user_phone_label %}
-      {# {{ dump() }} #}
-   <label class="col-form-label col-sm-2 required">Phone +33</label>
-{% endblock %} #}
+  <label class="col-form-label col-sm-2 required">Phone (+33)</label>
+{% endblock %}

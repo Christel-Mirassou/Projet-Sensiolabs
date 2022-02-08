@@ -17,15 +17,22 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+        if ('CREATE' == $options['crud_action']) {
+            $builder
+                ->add('firstName')  //Par défaut un champ sans classe est de type texte
+                ->add('lastName')
+            ;
+        }
+
         $builder
-            ->add('firstName', Type\TextType::class)  //Par défaut un champ sans classe est de type texte
-            ->add('lastName', Type\TextType::class)
             ->add('email', Type\EmailType::class)
             ->add('phone', Type\TelType::class)
+            //->add('address', AddressType::class)
             ->add('password', Type\RepeatedType::class, [
                 'type' => Type\PasswordType::class,
-                'first_options'=>['label' => 'Password'], 
-                'second_options'=>['label' => 'Confirm Password'] 
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Confirm Password']
             ])
             ->add('terms', Type\CheckboxType::class, [
                 'constraints' => [new Assert\IsTrue(null, 'Les CGU doivent être acceptées')],   //impose une validation côté serveur qui est plus puissante qu'un simple required->true qui n'est qu'une validation html
@@ -36,14 +43,14 @@ class UserType extends AbstractType
             ])
             ->add('save', Type\SubmitType::class, [
                 'label' => 'Create your SensioTV account'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'crud_action' => 'EDIT',
         ]);
     }
 }

@@ -14,7 +14,10 @@ class UserController extends AbstractController
     #[Route('/register', name: 'register')]
     public function register(Request $request, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(UserType::class);
+        $form = $this->createForm(UserType::class, null, [
+            'crud_action' => 'CREATE',
+        ]);
+        //$form->add('save', Type\SubmitType::class);
 
         // dump($form->getData());
 
@@ -24,6 +27,7 @@ class UserController extends AbstractController
             $user = $form->getData();
             $manager->persist($user);
             $manager->flush();
+            dump($user); 
         }
 
         return $this->render('user/register.html.twig', [

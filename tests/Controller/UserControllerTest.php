@@ -38,7 +38,7 @@ class UserControllerTest extends WebTestCase
         ]);
         $this->assertEquals(0, $client->getCrawler()->filter('.form-error-message')->count());
 
-        // file_put_contents(__DIR__.'../../public/test.html', print_r($client->getResponse()->getContent()));die;
+        // file_put_contents(__DIR__.'/../../public/test.html', print_r($client->getResponse()->getContent(), true));die;
 
         $userRepo = $client->getContainer()->get(UserRepository::class);
         $user = $userRepo->findOneByEmail('christel@postlab.fr');
