@@ -16,9 +16,14 @@ class MovieController extends AbstractController
 {
     private OmdbApi $omdbApi;
 
-    public function __construct()
+    public function __construct(OmdbApi $omdbApi)
     {
-        $this->omdbApi = new OmdbApi(HttpClient::create() ,'28c5b7b1', 'https://www.omdbapi.com');
+        //appel du nouveau service créé
+        $this->omdbApi= $omdbApi; 
+
+
+        //Plus nécessaire avec la création du nouveau service
+        // $this->omdbApi = new OmdbApi(HttpClient::create() ,'28c5b7b1', 'https://www.omdbapi.com');
         
     }
 

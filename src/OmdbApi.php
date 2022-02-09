@@ -37,11 +37,12 @@ final class OmdbApi
     /** @var HttpClientInterface */
     private $httpClient;
 
-    public function __construct(HttpClientInterface $omdbClient, string $omdbToken, string $omdbHost)
+    public function __construct(HttpClientInterface $omdbClient, string $omdbToken, string $omdbHost, $composerLicense = null)
     {
         $this->token = $omdbToken;
         $this->host = $omdbHost;
         $this->httpClient = $omdbClient;
+        dump($composerLicense);
     }
 
     public function requestOneById($mediaId, array $options = []): array
