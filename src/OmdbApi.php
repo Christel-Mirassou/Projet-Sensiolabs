@@ -42,7 +42,7 @@ final class OmdbApi
         $this->token = $omdbToken;
         $this->host = $omdbHost;
         $this->httpClient = $omdbClient;
-        dump($composerLicense);
+        // dump($composerLicense);
     }
 
     public function requestOneById($mediaId, array $options = []): array
