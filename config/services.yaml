@@ -44,3 +44,7 @@ services:
             $omdbToken: '28c5b7b1'
             $omdbHost: 'https://www.omdbapi.com'
             $composerLicense: '%env(key:license:json:file:resolve:COMPOSER_PATH)%' #variable créée dans le fichier .env
+
+    App\EventListener\MovieImportedListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'postPersist', entity: 'App\Entity\Movie' }

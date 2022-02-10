@@ -2,19 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\UserType;
+use App\Event\UserRegisteredEvent;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class UserController extends AbstractController
 {
     #[Route('/register', name: 'register')]
-    public function register(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher): Response
+    public function register(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher, EventDispatcherInterface $eventDispatcher): Response
     {
         $form = $this->createForm(UserType::class, null, [
             'crud_action' => 'CREATE',
@@ -35,6 +39,8 @@ class UserController extends AbstractController
             
             $manager->persist($user);
             $manager->flush();
+
+            $eventDispatcher->dispatch(new UserRegisteredEvent($user), 'user_registered');
             dump($user); 
         }
 
