@@ -20,7 +20,7 @@ class Movie
     #[ORM\Column(type: 'date')]
     private $releaseDate;
 
-    #[ORM\Column(type: 'string', length: 10, nullable: true, unique: true)]
+    #[ORM\Column(type: 'string', length: 10, unique: true)]
     private $imdbId;
 
     #[ORM\Column(type: 'string', length: 255)]

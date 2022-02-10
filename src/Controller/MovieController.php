@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Movie;
 use App\OmdbApi;
+use App\Entity\Movie;
 use App\Repository\MovieRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 class MovieController extends AbstractController
 {
@@ -70,7 +72,9 @@ class MovieController extends AbstractController
     public function show(int $id, MovieRepository $movieRepository): Response
     {
         $movie = $movieRepository->findOneById($id);
-
+        if (!$this->isGranted('MOVIE_SHOW', $movie)) {
+            throw new AccessDeniedException('You are not allowed to see the movie '. $movie->getTitle());
+        }
         return $this->render('movie/show.html.twig', [
             'id' => $id,
             'movie'=> $movie,
@@ -79,9 +83,14 @@ class MovieController extends AbstractController
     
     /**
      * @Route("/movie/{imdbId}/import", name="movie_import")
+     * @IsGranted("ROLE_USER")
      */
     public function import($imdbId, EntityManagerInterface $manager): Response
     {
+        //Seulement un user connecté en tant qu'admin peut importer un film
+        //cette ligne ou l'annotation au-dessus mais pas les 2
+        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $movieData = $this->omdbApi->requestOneById($imdbId);
         $movie = Movie::fromApi($movieData);
         // dump($movie);
