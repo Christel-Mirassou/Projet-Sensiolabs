@@ -11,10 +11,10 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-        #option 3: Mais attention que les noms soitent très spécifiques!!!!
+        #option 3: Mais attention que les noms soient très spécifiques!!!!
         # bind:
-        #     $omdbToken: '28c5b7b1'
-        #     $omdbHost: 'https://www.omdbapi.com'
+        #     $imdbToken: '28c5b7b1'
+        #     $imdbHost: 'https://www.omdbapi.com'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
